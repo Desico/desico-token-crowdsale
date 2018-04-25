@@ -283,7 +283,12 @@ contract('DesicoCrowdsale', function (accounts) {
       await ico.claimRefund({ from: otherWhitelistedWallet }).should.be.rejectedWith(EVMRevert);
     });
 
-    it('should give correct ammount of tokens during 1st stage', async function () {
+    it('should reject amount = 0', async function () {
+      const value = ether(0);
+      await ico.amount(value).should.be.rejectedWith(EVMRevert);
+    });
+
+    it('should give correct amount of tokens during 1st stage', async function () {
       const value = ether(1);
       var rate = await ico.STAGE1_RATE();
   
@@ -298,7 +303,7 @@ contract('DesicoCrowdsale', function (accounts) {
       balanceAfter.should.be.bignumber.equal(amount);
     });
   
-    it('should give correct ammount of tokens in 1st and 2nd stage', async function () {
+    it('should give correct amount of tokens in 1st and 2nd stage', async function () {
       const value = ether(100);
       var goal1 = await ico.STAGE1_GOAL();
       var rate1 = await ico.STAGE1_RATE();
@@ -315,7 +320,7 @@ contract('DesicoCrowdsale', function (accounts) {
       balanceAfter.should.be.bignumber.equal(amount);
     });
   
-    it('should give correct ammount of tokens in 2nd and 3rd stage', async function () {
+    it('should give correct amount of tokens in 2nd and 3rd stage', async function () {
       const value = ether(100);
       var goal1 = await ico.STAGE1_GOAL();
       var goal2 = await ico.STAGE2_GOAL();
@@ -336,7 +341,7 @@ contract('DesicoCrowdsale', function (accounts) {
       balanceAfter.should.be.bignumber.equal(amount);
     });
   
-    it('should give correct ammount of tokens in 3rd and 4th stage', async function () {
+    it('should give correct amount of tokens in 3rd and 4th stage', async function () {
       const value = ether(100);
       var goal1 = await ico.STAGE1_GOAL();
       var goal2 = await ico.STAGE2_GOAL();
@@ -364,7 +369,7 @@ contract('DesicoCrowdsale', function (accounts) {
       balanceAfter.should.be.bignumber.equal(amount);
     });
     
-    it('should give correct ammount of tokens in 4th and 5th stage', async function () {
+    it('should give correct amount of tokens in 4th and 5th stage', async function () {
       const value = ether(100);
       var goal1 = await ico.STAGE1_GOAL();
       var goal2 = await ico.STAGE2_GOAL();
@@ -397,7 +402,7 @@ contract('DesicoCrowdsale', function (accounts) {
       balanceAfter.should.be.bignumber.equal(amount);
     });
 
-    it('should give correct ammount of tokens in 5th stage', async function () {
+    it('should give correct amount of tokens in 5th stage', async function () {
       const value = ether(10);
       var goal1 = await ico.STAGE1_GOAL();
       var goal2 = await ico.STAGE2_GOAL();
@@ -432,7 +437,7 @@ contract('DesicoCrowdsale', function (accounts) {
       balanceAfter.should.be.bignumber.equal(amount);
     });
   
-    it('should be able to purchase maximum ammount of tokens', async function () {
+    it('should be able to purchase maximum amount of tokens', async function () {
       var goal1 = await ico.STAGE1_GOAL();
       var goal2 = await ico.STAGE2_GOAL();
       var goal3 = await ico.STAGE3_GOAL();

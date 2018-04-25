@@ -80,7 +80,7 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
 
   function started() public view returns(bool) {
     // solium-disable-next-line security/no-block-members
-    return block.timestamp >= openingTime;
+    return block.timestamp >= openingTime && initialized;
   }
 
   function ended() public view returns(bool) {
@@ -88,6 +88,8 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
   }
 
   function amount(uint256 _weiAmount) public view returns(uint256) {
+    require(initialized);
+
     return _getTokenAmount(_weiAmount);
   }
 
@@ -141,6 +143,8 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
    * @param _tokenAmount Number of tokens to be purchased
    */
   function _processPurchase(address _beneficiary, uint256 _tokenAmount) internal {
+    require(initialized);
+    
     super._processPurchase(_beneficiary, _tokenAmount);
 
     tokensSold = tokensSold.add(_tokenAmount);
