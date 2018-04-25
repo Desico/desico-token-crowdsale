@@ -1,5 +1,8 @@
 # Desico Token
 
+[![Build Status](https://travis-ci.org/Desico/desico-token-crowdsale.svg?branch=master?branch=master)](https://travis-ci.org/Desico/desico-token-crowdsale)
+
+
 ## About
 
 * See [desico.io](https://www.desico.io) for more details.
