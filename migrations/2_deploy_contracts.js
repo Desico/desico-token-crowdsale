@@ -2,12 +2,6 @@ var DesicoCrowdsale = artifacts.require('./DesicoCrowdsale.sol');
 var DesicoToken = artifacts.require('./DesicoToken.sol');
 
 module.exports = function (deployer, network, accounts) {
-  /*
-  if (network === 'development') {
-    return;
-  }
-  */
-
   const ownerWallet = accounts[0] || process.env.WALLET_OWNER;
   const crowdsaleWallet = accounts[1] || process.env.WALLET_CROWDSALE;
   const teamWallet = accounts[2] || process.env.WALLET_TEAM;
@@ -44,11 +38,15 @@ module.exports = function (deployer, network, accounts) {
           foundationWallet,
           advisorsWallet,
           bountiesWallet,
-          financialSupportersWallet,
-          { from: ownerWallet, gas: 4712388, gasPrice: 65000000000 }
+          financialSupportersWallet
         )
           .then(function () {
+            return DesicoToken.deployed();
+          })
+          .then(function (_token) {
             console.log('Token address: ' + DesicoToken.address);
+
+            token = _token;
 
             return deployer.deploy(
               DesicoCrowdsale,
@@ -56,16 +54,13 @@ module.exports = function (deployer, network, accounts) {
               endTime,
               crowdsaleWallet,
               reserveWallet,
-              DesicoToken.address,
-              { from: ownerWallet, gas: 4712388, gasPrice: 65000000000 });
+              DesicoToken.address);
+          })
+          .then(function () {
+            return DesicoCrowdsale.deployed();
           })
           .then(function () {
             console.log('Crowdsale address: ' + DesicoCrowdsale.address);
-
-            return DesicoToken.deployed();
-          })
-          .then(function (_token) {
-            token = _token;
 
             return token.owner.call();
           })

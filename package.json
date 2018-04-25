@@ -5,6 +5,7 @@
   "scripts": {
     "test": "scripts/test.sh",
     "test:cov": "scripts/coverage.sh",
+    "rpc": "scripts/rpc.sh",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "lint:sol": "solium -d .",

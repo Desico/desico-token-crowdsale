@@ -17,4 +17,5 @@ cache:
 
 script:
 - npm run lint
+- nmp test
 - npm run test:cov

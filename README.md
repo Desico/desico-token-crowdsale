@@ -5,7 +5,7 @@
 
 ## About
 
-* See [desico.io](https://www.desico.io) for more details.
+DESICO is the world’s first platform to issue, buy, and sell security tokens in full compliance with the law. See [desico.io](https://www.desico.io) for more details.
 
 ## Development
 
