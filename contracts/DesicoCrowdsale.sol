@@ -99,7 +99,6 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
    * @return The number of tokens _weiAmount wei will buy at present time
    */
   function _getTokenAmount(uint256 _weiAmount) internal view returns (uint256) {
-    require(initialized);
     require(_weiAmount > 0);
     require(weiRaised.add(_weiAmount) <= STAGE5_GOAL);
     
