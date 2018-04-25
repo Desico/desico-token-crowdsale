@@ -27,7 +27,6 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
   uint256 public constant STAGE4_RATE = 8848; // RATE + 12%
   uint256 public constant STAGE5_RATE = 8453; // RATE + 7%
 
-  address private reserveWallet;
   uint256 public tokensSold;
   bool public initialized = false;
 
@@ -47,7 +46,6 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
     uint256 _openingTime,
     uint256 _closingTime,
     address _wallet,
-    address _reserveWallet,
     address _token
   ) 
     public 
@@ -56,10 +54,6 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
     CappedCrowdsale(TOTAL_SUPPLY)
     RefundableCrowdsale(GOAL)
   {
-    require(_reserveWallet != address(0));
-
-    reserveWallet = _reserveWallet;
-
     tranches[0].amount = STAGE1_GOAL;
     tranches[0].rate = STAGE1_RATE;
 
@@ -156,12 +150,6 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
    * @dev finalization task, called when owner calls finalize()
    */
   function finalization() internal {
-    if (!capReached()) {
-      uint256 _remaining = cap.sub(tokensSold);
-      
-      DesicoToken(token).mint(reserveWallet, _remaining);
-    }
-
     DesicoToken(token).finishMinting();
     DesicoToken(token).unpause();
     DesicoToken(token).transferOwnership(owner);

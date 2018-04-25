@@ -69,7 +69,6 @@ contract('DesicoCrowdsale', function (accounts) {
       openingTime,
       closingTime,
       crowdsaleWallet,
-      reserveWallet,
       token.address
     );
 
@@ -536,24 +535,21 @@ contract('DesicoCrowdsale', function (accounts) {
       (await token.owner()).should.be.equal(ownerWallet);
     });
 
-    it('unsold tokens should be moved to reserve wallet after ICO finishes', async function () {
+    it('unsold tokens should be burned (not minted)', async function () {
       await increaseTimeTo(openingTime);
-      var balanceBefore = await token.balanceOf(reserveWallet);
-      
+
       const value = ether(1);
       await ico.buyTokens(otherWhitelistedWallet, { value: value, from: otherWhitelistedWallet })
         .should.be.fulfilled;
       
       var tokensSold = await ico.tokensSold();
-      var cap = await ico.cap();
-      var remainingTokens = cap.sub(tokensSold);
            
       await increaseTimeTo(afterClosingTime);
       await ico.finalize().should.be.fulfilled;
 
-      var balanceAfter = await token.balanceOf(reserveWallet);
+      var tokensSoldAfter = await ico.tokensSold();
 
-      balanceBefore.add(remainingTokens).should.be.bignumber.equal(balanceAfter);
+      tokensSold.should.be.bignumber.equal(tokensSoldAfter);
     });
 
     it('should be able to transfer tokens', async function () {

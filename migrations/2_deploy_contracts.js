@@ -53,7 +53,6 @@ module.exports = function (deployer, network, accounts) {
               startTime,
               endTime,
               crowdsaleWallet,
-              reserveWallet,
               DesicoToken.address);
           })
           .then(function () {
