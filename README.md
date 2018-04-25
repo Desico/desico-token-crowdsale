@@ -5,6 +5,10 @@
 
 ## About
 
+<p align="center">
+  <img src="https://www.desico.io/images/logo.png">
+</p>
+
 DESICO is the world’s first platform to issue, buy, and sell security tokens in full compliance with the law. See [desico.io](https://www.desico.io) for more details.
 
 ## Development
@@ -45,7 +49,7 @@ Run
 
 To generate code coverage reports run
 
-    npm run test:cov
+    npm run coverage
 
 *Note* Generating code coverage reports takes a bit longer to run than just running the tests.
 

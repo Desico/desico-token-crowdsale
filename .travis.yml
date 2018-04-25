@@ -18,4 +18,6 @@ cache:
 script:
 - npm run lint
 - nmp test
-- npm run test:cov
+
+after_script:
+- npm run coverage && cat coverage/lcov.info | coveralls

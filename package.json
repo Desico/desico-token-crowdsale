@@ -4,7 +4,7 @@
   "description": "Desico Smart Contract",
   "scripts": {
     "test": "scripts/test.sh",
-    "test:cov": "scripts/coverage.sh",
+    "coverage": "scripts/coverage.sh",
     "rpc": "scripts/rpc.sh",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
