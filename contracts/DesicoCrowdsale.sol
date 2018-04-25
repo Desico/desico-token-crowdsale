@@ -88,8 +88,6 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
   }
 
   function amount(uint256 _weiAmount) public view returns(uint256) {
-    require(initialized);
-
     return _getTokenAmount(_weiAmount);
   }
 
@@ -99,6 +97,7 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
    * @return The number of tokens _weiAmount wei will buy at present time
    */
   function _getTokenAmount(uint256 _weiAmount) internal view returns (uint256) {
+    require(initialized);
     require(_weiAmount > 0);
     require(weiRaised.add(_weiAmount) <= STAGE5_GOAL);
     
@@ -142,8 +141,6 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
    * @param _tokenAmount Number of tokens to be purchased
    */
   function _processPurchase(address _beneficiary, uint256 _tokenAmount) internal {
-    require(initialized);
-    
     super._processPurchase(_beneficiary, _tokenAmount);
 
     tokensSold = tokensSold.add(_tokenAmount);
@@ -153,6 +150,8 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
    * @dev finalization task, called when owner calls finalize()
    */
   function finalization() internal {
+    require(initialized);
+    
     DesicoToken(token).finishMinting();
     DesicoToken(token).unpause();
     DesicoToken(token).transferOwnership(owner);
