@@ -12,6 +12,7 @@ cache:
 script:
 - npm run lint
 - nmp test
+after_script:
 - npm run coverage
 env:
   global:
