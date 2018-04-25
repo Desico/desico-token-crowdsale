@@ -1,23 +1,18 @@
 dist: trusty
-
 language: node_js
-
 node_js:
 - 9.11.1
-
 before_install:
 - npm install -g truffle codecov
-
 install:
 - npm install
-
 cache:
   directories:
   - node_modules
-
 script:
 - npm run lint
 - nmp test
-
-after_script:
-- npm run coverage && cat coverage/lcov.info | coveralls
+- npm run coverage
+env:
+  global:
+    secure: ED0fW9GP1/H3kYCIq03qQkPsw0qKTkLSIzaJk0raTGEYX80jUnWWFoRHWVabujUuyCElhfLSKg29OJ1a8eohEtuIwEF+EJLb92tq/TEOsEID0KG6aAje/Pe6bDkwC1IFMJhhk34feqJZqN9bgJl7AV5s5Gz4ujF3DIdlS2t+nnUaI2Iqa0ILYaXuegr6QaK4HHNKB/XMjELLSp4Octhd5dDf3lKmDeiCc4cPw8jHzt9OhkFMJPuHRPL4acQBICzTh7YrmBL75L2gvX12UB2hkL/ahOdS4q9VU3APys3OPGPqSzUuangNAGjpc2Gu37gLIsPMPbquHojNCCOni4bDb2BwNwBwMcAIsTEshSTPr7MbsPy77QeAK99eYW+DBWE8Fp1dHOpvwdMYTGCsUtGD3wy98yOghb4bvOPXhQKaB45MbM5whr67J0VmmLZGyvwQQ+PdfTkESbsdNbkM1+eJXZfapb9udHIRQv7KhTzfxB1qO/aHjv1nxYNqrGfv+saBGrEbDZzFckNrSB2rSnkZOLjNmdBgDvmlCz/EKBJ5EGhpZxOSxhYbgaF+LoAk4xEZnkkD1Idn1e2yUjpbVMofJvKA7VR+zctBGbXUJ3Krrl5EJJ9volCXrdlZw/sdbzJGErs8p1LBKXdCiQqen+UUWLADEXrU3xNZ+ZAyM4Bxs6g=
