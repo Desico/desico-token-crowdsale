@@ -39,8 +39,8 @@ module.exports = {
       host: 'localhost',
       network_id: '*', // eslint-disable-line camelcase
       port: 8555,
-      gas: 0xfffffffffff,
-      gasPrice: 0x01,
+      gas: 4712388,
+      gasPrice: 65000000000,
     },
     ganache: {
       host: 'localhost',
