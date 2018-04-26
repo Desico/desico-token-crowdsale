@@ -44,6 +44,20 @@ contract('DesicoToken', function (accounts) {
   });
 
   describe('initialize', function () {
+    it('release time should not be in the past', async function () {
+      const releaseTime = latestTime() - duration.seconds(1);
+
+      await DesicoToken.new(
+        releaseTime,
+        teamWallet,
+        reserveWallet,
+        foundationWallet,
+        advisorsWallet,
+        bountiesWallet,
+        financialSupportersWallet
+      ).should.be.rejectedWith(EVMRevert);
+    });
+
     it('team wallet should not be the zero address', async function () {
       const releaseTime = latestTime() + duration.years(1);
 
