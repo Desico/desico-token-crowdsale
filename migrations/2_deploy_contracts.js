@@ -4,6 +4,10 @@ const CSVParser = require('csv-parse/lib/sync');
 const fs = require('fs');
 
 module.exports = function (deployer, network, accounts) {
+  if (network === 'development') {
+    return;
+  }
+
   const ownerWallet = accounts[0] || process.env.WALLET_OWNER;
   const crowdsaleWallet = accounts[1] || process.env.WALLET_CROWDSALE;
   const teamWallet = accounts[2] || process.env.WALLET_TEAM;
