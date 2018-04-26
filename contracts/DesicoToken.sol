@@ -65,14 +65,11 @@ contract DesicoToken is DetailedERC20, PausableToken, CappedToken {
   }
   
   function mintAndLock(address to, uint256 amount, uint256 releaseTime) internal {
-    require(to != address(0));
-
     timelock[to] = new TokenTimelock(this, to, releaseTime);
     mint(address(timelock[to]), amount);
   }
 
   function unlock(address to) internal {
-    require(to != address(0));
     TokenTimelock t = timelock[to];
     t.release();
   }
