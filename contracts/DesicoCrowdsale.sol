@@ -27,6 +27,7 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
   uint256 public constant STAGE4_RATE = 8848; // RATE + 12%
   uint256 public constant STAGE5_RATE = 8453; // RATE + 7%
 
+  uint256 public minLimit = 100 finney;
   uint256 public tokensSold;
   bool public initialized = false;
 
@@ -93,12 +94,25 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
 
   /**
    * @dev Overrides parent method
+   * @param _beneficiary Address performing the token purchase
+   * @param _weiAmount Value in wei involved in the purchase
+   */
+  function _preValidatePurchase(address _beneficiary, uint256 _weiAmount) internal {
+    require(initialized);
+    require(_weiAmount >= minLimit);
+    require(weiRaised.add(_weiAmount) <= STAGE5_GOAL);
+
+    super._preValidatePurchase(_beneficiary, _weiAmount);
+  }
+
+  /**
+   * @dev Overrides parent method
    * @param _weiAmount The value in wei to be converted into tokens
    * @return The number of tokens _weiAmount wei will buy at present time
    */
   function _getTokenAmount(uint256 _weiAmount) internal view returns (uint256) {
     require(initialized);
-    require(_weiAmount > 0);
+    require(_weiAmount >= minLimit);
     require(weiRaised.add(_weiAmount) <= STAGE5_GOAL);
     
     uint256 _total = 0;

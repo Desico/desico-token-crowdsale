@@ -25,7 +25,8 @@ contract('DesicoCrowdsale', function (accounts) {
   const financialSupportersWallet = accounts[7];
   const otherWhitelistedWallet = accounts[8];
   const otherNotWhitelistedWallet = accounts[9];
-  
+  const minLimit = 0.1;
+
   var token;
   var ico;
   var openingTime;
@@ -283,9 +284,13 @@ contract('DesicoCrowdsale', function (accounts) {
       await ico.claimRefund({ from: otherWhitelistedWallet }).should.be.rejectedWith(EVMRevert);
     });
 
-    it('should reject amount = 0', async function () {
-      const value = ether(0);
-      await ico.amount(value).should.be.rejectedWith(EVMRevert);
+    it('should reject amount < ' + minLimit, async function () {
+      await ico.amount(ether(0)).should.be.rejectedWith(EVMRevert);
+      await ico.amount(ether(minLimit - 0.01)).should.be.rejectedWith(EVMRevert);
+      (await ico.amount(ether(minLimit))).should.be.bignumber.gt(0);
+      (await ico.amount(ether(minLimit + 0.01))).should.be.bignumber.gt(0);
+      (await ico.amount(ether(1))).should.be.bignumber.gt(0);
+      (await ico.amount(ether(11))).should.be.bignumber.gt(0);
     });
 
     it('should give correct amount of tokens during 1st stage', async function () {
@@ -478,6 +483,22 @@ contract('DesicoCrowdsale', function (accounts) {
       await increaseTimeTo(openingTime);
       await ico.buyTokens(otherWhitelistedWallet, { value: goal5.add(value), from: otherWhitelistedWallet })
         .should.be.rejectedWith(EVMRevert);
+    });
+
+    it('should reject payment with amount < ' + minLimit, async function () {
+      await increaseTimeTo(openingTime);
+      await ico.buyTokens(otherWhitelistedWallet, { value: ether(0), from: otherWhitelistedWallet })
+        .should.be.rejectedWith(EVMRevert);
+      await ico.buyTokens(otherWhitelistedWallet, { value: ether(minLimit - 0.01), from: otherWhitelistedWallet })
+        .should.be.rejectedWith(EVMRevert);
+      await ico.buyTokens(otherWhitelistedWallet, { value: ether(minLimit), from: otherWhitelistedWallet })
+        .should.be.fulfilled;
+      await ico.buyTokens(otherWhitelistedWallet, { value: ether(minLimit + 0.01), from: otherWhitelistedWallet })
+        .should.be.fulfilled;
+      await ico.buyTokens(otherWhitelistedWallet, { value: ether(1), from: otherWhitelistedWallet })
+        .should.be.fulfilled;
+      await ico.buyTokens(otherWhitelistedWallet, { value: ether(11), from: otherWhitelistedWallet })
+        .should.be.fulfilled;
     });
   });
 
