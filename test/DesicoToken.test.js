@@ -13,6 +13,7 @@ require('chai')
 const DesicoToken = artifacts.require('./DesicoToken.sol');
 
 contract('DesicoToken', function (accounts) {
+  const zeroWallet = '0x0000000000000000000000000000000000000000';
   const cap = new BigNumber(803631373 * 10 ** 18);
   const teamWallet = accounts[2];
   const reserveWallet = accounts[3];
@@ -40,6 +41,92 @@ contract('DesicoToken', function (accounts) {
       bountiesWallet,
       financialSupportersWallet
     );
+  });
+
+  describe('initialize', function () {
+    it('team wallet should not be the zero address', async function () {
+      const releaseTime = latestTime() + duration.years(1);
+
+      await DesicoToken.new(
+        releaseTime,
+        zeroWallet,
+        reserveWallet,
+        foundationWallet,
+        advisorsWallet,
+        bountiesWallet,
+        financialSupportersWallet
+      ).should.be.rejectedWith(EVMRevert);
+    });
+
+    it('reserve wallet should not be the zero address', async function () {
+      const releaseTime = latestTime() + duration.years(1);
+
+      await DesicoToken.new(
+        releaseTime,
+        teamWallet,
+        zeroWallet,
+        foundationWallet,
+        advisorsWallet,
+        bountiesWallet,
+        financialSupportersWallet
+      ).should.be.rejectedWith(EVMRevert);
+    });
+
+    it('foundation wallet should not be the zero address', async function () {
+      const releaseTime = latestTime() + duration.years(1);
+
+      await DesicoToken.new(
+        releaseTime,
+        teamWallet,
+        reserveWallet,
+        zeroWallet,
+        advisorsWallet,
+        bountiesWallet,
+        financialSupportersWallet
+      ).should.be.rejectedWith(EVMRevert);
+    });
+
+    it('advisors wallet should not be the zero address', async function () {
+      const releaseTime = latestTime() + duration.years(1);
+
+      await DesicoToken.new(
+        releaseTime,
+        teamWallet,
+        reserveWallet,
+        foundationWallet,
+        zeroWallet,
+        bountiesWallet,
+        financialSupportersWallet
+      ).should.be.rejectedWith(EVMRevert);
+    });
+
+    it('bounties wallet should not be the zero address', async function () {
+      const releaseTime = latestTime() + duration.years(1);
+
+      await DesicoToken.new(
+        releaseTime,
+        teamWallet,
+        reserveWallet,
+        foundationWallet,
+        advisorsWallet,
+        zeroWallet,
+        financialSupportersWallet
+      ).should.be.rejectedWith(EVMRevert);
+    });
+
+    it('financial supporters wallet should not be the zero address', async function () {
+      const releaseTime = latestTime() + duration.years(1);
+      
+      await DesicoToken.new(
+        releaseTime,
+        teamWallet,
+        reserveWallet,
+        foundationWallet,
+        advisorsWallet,
+        bountiesWallet,
+        zeroWallet
+      ).should.be.rejectedWith(EVMRevert);
+    });
   });
 
   describe('details', function () {
