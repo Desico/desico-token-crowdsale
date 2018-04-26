@@ -13,7 +13,8 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
   uint256 public constant TOTAL_SUPPLY = 409852000 * TOKEN_UNIT;
 
   uint256 public constant GOAL = 7500 ether;
-  
+  uint256 public constant MIN_LIMIT = 100 finney;
+
   uint256 public constant STAGE1_GOAL = 7500 ether;
   uint256 public constant STAGE2_GOAL = 11500 ether;
   uint256 public constant STAGE3_GOAL = 22500 ether;
@@ -27,7 +28,7 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
   uint256 public constant STAGE4_RATE = 8848; // RATE + 12%
   uint256 public constant STAGE5_RATE = 8453; // RATE + 7%
 
-  uint256 public minLimit = 100 finney;
+
   uint256 public tokensSold;
   bool public initialized = false;
 
@@ -99,7 +100,7 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
    */
   function _preValidatePurchase(address _beneficiary, uint256 _weiAmount) internal {
     require(initialized);
-    require(_weiAmount >= minLimit);
+    require(_weiAmount >= MIN_LIMIT);
     require(weiRaised.add(_weiAmount) <= STAGE5_GOAL);
 
     super._preValidatePurchase(_beneficiary, _weiAmount);
@@ -112,7 +113,7 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
    */
   function _getTokenAmount(uint256 _weiAmount) internal view returns (uint256) {
     require(initialized);
-    require(_weiAmount >= minLimit);
+    require(_weiAmount >= MIN_LIMIT);
     require(weiRaised.add(_weiAmount) <= STAGE5_GOAL);
     
     uint256 _total = 0;
