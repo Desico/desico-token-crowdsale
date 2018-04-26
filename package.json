@@ -29,12 +29,13 @@
     "ico",
     "crowdsale"
   ],
-  "author": "Arturas Paleicikas <paleicikas@gmail.com>",
+  "author": "Arturas Paleicikas <paleicikas@gmail.com>, Marius Lukošiūnas <shumkis@gmail.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Desico/desico-token-crowdsale/issues"
   },
   "homepage": "https://www.desico.io",
+  "eslintIgnore": ["coverage"],
   "devDependencies": {
     "babel-polyfill": "^6.26.0",
     "babel-preset-es2015": "^6.18.0",
@@ -62,6 +63,7 @@
     "zeppelin-solidity": "^1.8.0"
   },
   "dependencies": {
+    "csv-parse": "^2.2.0",
     "dotenv": "^4.0.0",
     "npm": "^5.8.0"
   }

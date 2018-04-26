@@ -1,5 +1,7 @@
-var DesicoCrowdsale = artifacts.require('./DesicoCrowdsale.sol');
-var DesicoToken = artifacts.require('./DesicoToken.sol');
+const DesicoCrowdsale = artifacts.require('./DesicoCrowdsale.sol');
+const DesicoToken = artifacts.require('./DesicoToken.sol');
+const CSVParser = require('csv-parse/lib/sync');
+const fs = require('fs');
 
 module.exports = function (deployer, network, accounts) {
   const ownerWallet = accounts[0] || process.env.WALLET_OWNER;
@@ -20,6 +22,7 @@ module.exports = function (deployer, network, accounts) {
   console.log('Bounties wallet address: ' + bountiesWallet);
   console.log('Financial supporters wallet address: ' + financialSupportersWallet);
 
+  var ico;
   var token;
   var tokenOwner;
 
@@ -76,7 +79,9 @@ module.exports = function (deployer, network, accounts) {
             return DesicoCrowdsale.deployed();
           })
           .then(function (_ico) {
-            return _ico.addManyToWhitelist([
+            ico = _ico;
+
+            return ico.addManyToWhitelist([
               ownerWallet,
               crowdsaleWallet,
               teamWallet,
@@ -87,7 +92,32 @@ module.exports = function (deployer, network, accounts) {
               financialSupportersWallet,
             ]);
           })
-          .then(function () {
+          .then(async function () {
+            const batchSize = 100;
+            const rawData = fs.readFileSync('data/whitelist.csv').toString('utf-8');
+            const data = CSVParser(rawData, { columns: true });
+
+            if (data.length > 0) {
+              let accounts = [];
+              for (let row of data) {
+                accounts.push({ address: web3.toHex(row.account) });
+              }
+
+              var whitelistedCount = 0;
+              while (whitelistedCount < accounts.length) {
+                let accountsToImport = [];
+                let i = 0;
+                while (accountsToImport.length < batchSize && whitelistedCount + i < accounts.length) {
+                  accountsToImport.push(accounts[whitelistedCount + i].address);
+                  i++;
+                }
+
+                await ico.addManyToWhitelist(accountsToImport);
+
+                whitelistedCount += accountsToImport.length;
+              }
+            }
+
             console.log('Wallets whitelisted');
           });
       }
