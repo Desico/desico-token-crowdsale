@@ -532,6 +532,13 @@ contract('DesicoCrowdsale', function (accounts) {
       await ico.finalize({ from: otherWhitelistedWallet }).should.be.rejectedWith(EVMRevert);
     });
 
+    it('should finalize if initialized', async function () {
+      await increaseTimeTo(afterClosingTime);
+
+      (await ico.initialized()).should.be.equal(true);
+      await ico.finalize().should.be.fulfilled;
+    });
+
     it('should finalize', async function () {
       await increaseTimeTo(afterClosingTime);
       await ico.finalize().should.be.fulfilled;
