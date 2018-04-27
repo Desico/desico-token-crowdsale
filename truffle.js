@@ -29,6 +29,11 @@ module.exports = {
       port: 8545,
       network_id: '*', // eslint-disable-line camelcase
     },
+    live: {
+      host: 'localhost',
+      port: 8545,
+      network_id: '*', // eslint-disable-line camelcase
+    },
     rinkeby: {
       provider: provider,
       network_id: 4, // eslint-disable-line camelcase

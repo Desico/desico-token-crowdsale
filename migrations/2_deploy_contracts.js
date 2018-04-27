@@ -8,14 +8,14 @@ module.exports = function (deployer, network, accounts) {
     return;
   }
 
-  const ownerWallet = accounts[0] || process.env.WALLET_OWNER;
-  const crowdsaleWallet = accounts[1] || process.env.WALLET_CROWDSALE;
-  const teamWallet = accounts[2] || process.env.WALLET_TEAM;
-  const reserveWallet = accounts[3] || process.env.WALLET_RESERVE;
-  const foundationWallet = accounts[4] || process.env.WALLET_FOUNDATION;
-  const advisorsWallet = accounts[5] || process.env.WALLET_ADVISORS;
-  const bountiesWallet = accounts[6] || process.env.WALLET_BOUNTIES;
-  const financialSupportersWallet = accounts[7] || process.env.WALLET_FINANCIAL_SUPPORTERS;
+  const ownerWallet = accounts[0] || process.env.ADDRESS_OWNER;
+  const crowdsaleWallet = accounts[1] || process.env.ADDRESS_CROWDSALE;
+  const teamWallet = accounts[2] || process.env.ADDRESS_TEAM;
+  const reserveWallet = accounts[3] || process.env.ADDRESS_RESERVE;
+  const foundationWallet = accounts[4] || process.env.ADDRESS_FOUNDATION;
+  const advisorsWallet = accounts[5] || process.env.ADDRESS_ADVISORS;
+  const bountiesWallet = accounts[6] || process.env.ADDRESS_BOUNTIES;
+  const financialSupportersWallet = accounts[7] || process.env.ADDRESS_FINANCIAL_SUPPORTERS;
 
   console.log('Owner wallet address: ' + ownerWallet);
   console.log('Crodsale wallet address: ' + crowdsaleWallet);
