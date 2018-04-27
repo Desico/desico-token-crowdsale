@@ -27,8 +27,7 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
   uint256 public constant STAGE3_RATE = 9480; // RATE + 20%
   uint256 public constant STAGE4_RATE = 8848; // RATE + 12%
   uint256 public constant STAGE5_RATE = 8453; // RATE + 7%
-
-
+  
   uint256 public tokensSold;
   bool public initialized = false;
 
@@ -43,6 +42,14 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
   }
 
   Tranche[5] private tranches;
+
+  /**
+   * @dev Reverts if not initialized.
+   */
+  modifier onlyIfInitialized {
+    require(initialized);
+    _;
+  }
 
   function DesicoCrowdsale(
     uint256 _openingTime,
@@ -89,7 +96,7 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
     return hasClosed() || capReached();
   }
 
-  function amount(uint256 _weiAmount) public view returns(uint256) {
+  function amount(uint256 _weiAmount) public onlyIfInitialized view returns(uint256) {
     return _getTokenAmount(_weiAmount);
   }
 
@@ -98,8 +105,7 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
    * @param _beneficiary Address performing the token purchase
    * @param _weiAmount Value in wei involved in the purchase
    */
-  function _preValidatePurchase(address _beneficiary, uint256 _weiAmount) internal {
-    require(initialized);
+  function _preValidatePurchase(address _beneficiary, uint256 _weiAmount) internal onlyIfInitialized {
     require(_weiAmount >= MIN_LIMIT);
     require(weiRaised.add(_weiAmount) <= STAGE5_GOAL);
 
@@ -111,8 +117,7 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
    * @param _weiAmount The value in wei to be converted into tokens
    * @return The number of tokens _weiAmount wei will buy at present time
    */
-  function _getTokenAmount(uint256 _weiAmount) internal view returns (uint256) {
-    require(initialized);
+  function _getTokenAmount(uint256 _weiAmount) internal onlyIfInitialized view returns (uint256) {
     require(_weiAmount >= MIN_LIMIT);
     require(weiRaised.add(_weiAmount) <= STAGE5_GOAL);
     
@@ -164,9 +169,7 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
   /**
    * @dev finalization task, called when owner calls finalize()
    */
-  function finalization() internal {
-    require(initialized);
-    
+  function finalization() internal onlyIfInitialized {
     DesicoToken(token).finishMinting();
     DesicoToken(token).unpause();
     DesicoToken(token).transferOwnership(owner);
