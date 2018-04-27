@@ -77,8 +77,6 @@ Then run
         node app.js
         
 
-You will need to supply a file called `.env` in this folder (copy & change from `.env.test`).
-
   - HTTP GET: `/whitelist/0x0` (curl: `curl -X GET http://localhost:3000/whitelist/0x0`)
   - HTTP POST: `/whitelist/0x0` (curl: `curl -X POST http://localhost:3000/whitelist/0x0`)
   - HTTP DELETE: `/whitelist/0x0` (curl: `curl -X DELETE http://localhost:3000/whitelist/0x0`)
