@@ -12,10 +12,6 @@ const infuraProvider = network => providerWithMnemonic(
   `https://${network}.infura.io/${process.env.INFURA_API_KEY}`
 );
 
-const provider = process.env.SOLIDITY_COVERAGE
-  ? undefined
-  : infuraProvider('rinkeby');
-
 module.exports = {
   solc: {
     optimizer: {
@@ -35,8 +31,14 @@ module.exports = {
       network_id: '*', // eslint-disable-line camelcase
     },
     rinkeby: {
-      provider: provider,
+      provider: infuraProvider('rinkeby'),
       network_id: 4, // eslint-disable-line camelcase
+      gas: 4712388,
+      gasPrice: 65000000000,
+    },
+    mainnet: {
+      provider: infuraProvider('mainnet'),
+      network_id: 1, // eslint-disable-line camelcase
       gas: 4712388,
       gasPrice: 65000000000,
     },
