@@ -31,6 +31,8 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
   uint256 public tokensSold;
   bool public initialized = false;
 
+  event Initialized();
+
   /**
   * Define pricing schedule using tranches.
   */
@@ -83,6 +85,7 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
     require(!initialized);
 
     DesicoToken(token).pause();
+    emit Initialized();
 
     initialized = true;
   }

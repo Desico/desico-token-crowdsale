@@ -103,4 +103,52 @@ app.get('/whitelist/:address', (req, res) => {
   res.send(ico.whitelist(req.params.address));
 });
 
+app.get('/ico/started', (req, res) => {
+  res.send(ico.started());
+});
+
+app.get('/ico/ended', (req, res) => {
+  res.send(ico.ended());
+});
+
+app.get('/ico/initialized', (req, res) => {
+  res.send(ico.initialized());
+});
+
+app.get('/ico/initialize', (req, res) => {
+  if (ico.initialized()) {
+    return res.status(500).send({ 'error': 'already initialized' });
+  }
+
+  _sendRawTransaction('initialize', [], [], function (err, txHash) {
+    if (err) {
+      return res.status(500).send({ 'error': err });
+    };
+
+    res.send(txHash);
+  });
+});
+
+app.get('/ico/finalized', (req, res) => {
+  res.send(ico.isFinalized());
+});
+
+app.get('/ico/finalize', (req, res) => {
+  if (ico.isFinalized()) {
+    return res.status(500).send({ 'error': 'already finalized' });
+  }
+
+  _sendRawTransaction('finalize', [], [], function (err, txHash) {
+    if (err) {
+      return res.status(500).send({ 'error': err });
+    };
+
+    res.send(txHash);
+  });
+});
+
+app.get('/ico/amount/:value', (req, res) => {
+  res.send(ico.amount(req.params.value));
+});
+
 app.listen(3000, () => console.log('App listening on port 3000'));
