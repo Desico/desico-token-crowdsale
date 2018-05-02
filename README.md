@@ -77,6 +77,13 @@ Then run
         node app.js
         
 
-  - HTTP GET: `/whitelist/0x0` (curl: `curl -X GET http://localhost:3000/whitelist/0x0`)
-  - HTTP POST: `/whitelist/0x0` (curl: `curl -X POST http://localhost:3000/whitelist/0x0`)
-  - HTTP DELETE: `/whitelist/0x0` (curl: `curl -X DELETE http://localhost:3000/whitelist/0x0`)
+  - `/whitelist/:address` - check address is whitelisted (`curl -X GET http://localhost:3000/whitelist/0x0`)
+  - `/whitelist/:address` -  add address to whitelist (`curl -X POST http://localhost:3000/whitelist/0x0`)
+  - `/whitelist/:address` - remove address from whitelist (`curl -X DELETE http://localhost:3000/whitelist/0x0`)
+  - `/ico/started` - check ICO is started or not (`curl -X GET http://localhost:3000/ico/started`)
+  - `/ico/ended` - check ICO is ended or not (`curl -X GET http://localhost:3000/ico/ended`)
+  - `/ico/initialized` - check ICO is initialized or not (`curl -X GET http://localhost:3000/ico/initialized`)
+  - `/ico/initialize` - initialize ICO (`curl -X GET http://localhost:3000/ico/initialize`)
+  - `/ico/finalized` - check ICO is finalized or not (`curl -X GET http://localhost:3000/ico/finalized`)
+  - `/ico/finalize` - finalize ICO (`curl -X GET http://localhost:3000/ico/finalize`)
+  - `/ico/amount/:value` - get current rate (by wei) (`curl -X GET http://localhost:3000/ico/amount/10000000000000000000`)
