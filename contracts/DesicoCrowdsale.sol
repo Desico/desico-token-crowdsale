@@ -128,10 +128,12 @@ contract DesicoCrowdsale is CappedCrowdsale, MintedCrowdsale, RefundableCrowdsal
     uint256 _from = weiRaised;
 
     for (uint i = 1; i < tranches.length; i++) {
-      if (_from <= tranches[i-1].amount) {
-        uint256 _rate1 = tranches[i-1].rate;
+      uint _i = i.sub(1);
+
+      if (_from <= tranches[_i].amount) {
+        uint256 _rate1 = tranches[_i].rate;
         uint256 _rate2 = tranches[i].rate;
-        uint256 _amount1 = tranches[i-1].amount;
+        uint256 _amount1 = tranches[_i].amount;
         uint256 _amount2 = tranches[i].amount;
 
         if (_from.add(_weiAmount) > _amount1) {
