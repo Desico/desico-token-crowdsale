@@ -18,7 +18,6 @@ contract DesicoToken is DetailedERC20, PausableToken, CappedToken {
   uint256 public constant TEAM_SUPPLY = 80363138 * TOKEN_UNIT;
   uint256 public constant FOUNDATION_SUPPLY = 80363137 * TOKEN_UNIT;
 
-  address private reserveWallet;
   address private teamWallet;
   address private foundationWallet;
 
@@ -46,7 +45,6 @@ contract DesicoToken is DetailedERC20, PausableToken, CappedToken {
     require(_bountiesWallet != address(0));
     require(_financialSupportersWallet != address(0));
 
-    reserveWallet = _reserveWallet;
     teamWallet = _teamWallet;
     foundationWallet = _foundationWallet;
 
