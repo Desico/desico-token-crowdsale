@@ -5,7 +5,7 @@ if (!mnemonic.length) {
   throw new Error('Mnemonic not set.');
 }
 
-const contractAddress = process.env.ADDRESS_CONTRACT || '';
+const contractAddress = process.env.DEPLOYED_CONTRACT_ADDRESS || '';
 if (!contractAddress.length) {
   throw new Error('Contract address not set.');
 }
