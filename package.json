@@ -31,7 +31,7 @@
     "crowdsale"
   ],
   "author": "Arturas Paleicikas <paleicikas@gmail.com>, Marius Lukošiūnas <shumkis@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Desico/desico-token-crowdsale/issues"
   },

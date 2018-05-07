@@ -1,5 +1,6 @@
 # Desico Token
 
+[![https://badges.frapsoft.com/os/mit/mit.svg?v=102](https://badges.frapsoft.com/os/mit/mit.svg?v=102)](https://opensource.org/licenses/MIT)
 [![Build Status](https://travis-ci.org/Desico/desico-token-crowdsale.svg?branch=master)](https://travis-ci.org/Desico/desico-token-crowdsale)
 [![Coverage Status](https://coveralls.io/repos/github/Desico/desico-token-crowdsale/badge.svg?branch=master)](https://coveralls.io/github/Desico/desico-token-crowdsale?branch=master)
 
